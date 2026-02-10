@@ -36,7 +36,6 @@ def is_leap(year: int) -> bool:
     
     return False
 
-
 # ============================================
 # EXERCISE 2: Print Function
 # ============================================
@@ -50,6 +49,22 @@ def consecutive_numbers(n: int):
     for i in range(1, n+1):
         print(i, end='')
 
+# ============================================
+# EXERCISE 3: Find a string
+# ============================================
+
+def count_substring(string: str, sub_string: str) -> int:
+    """
+    Count substring occurs in a given string
+    
+    :param string: Given string
+    :param sub_string: Substring
+    """
+    count = 0
+    for i in range(len(string) - len(sub_string) + 1):
+        if string[i:i + len(sub_string)] == sub_string:
+            count +=1
+    return count
 
 # ============================================
 # TESTS
@@ -67,6 +82,13 @@ if __name__ == "__main__":
     # Test Exercise 2
     print("\nExercise 2 - Print function:")
     consecutive_numbers(5) #12345
-    print("\n")
+
+    # Test Exercise 3
+    print("\n\nExercise 3 - Find a string:")
+    string = "ABCDCDC".strip()
+    sub_string = "CDC".strip()
+    
+    count = count_substring(string, sub_string) 
+    print(count) #2
 
     
