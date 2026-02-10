@@ -74,11 +74,32 @@ def count_substring(string: str, sub_string: str) -> int:
 if __name__ == '__main__':
     s = 'qA2'
     print("Exercise 4 - String validators:")
-    print(any(char.isalnum() for char in s)) #True
-    print(any(char.isalpha() for char in s)) #True
-    print(any(char.isdigit() for char in s)) #True
-    print(any(char.islower() for char in s)) #True
-    print(any(char.isupper() for char in s)) #True
+    print(any(char.isalnum() for char in s)) # True
+    print(any(char.isalpha() for char in s)) # True
+    print(any(char.isdigit() for char in s)) # True
+    print(any(char.islower() for char in s)) # True
+    print(any(char.isupper() for char in s)) # True
+
+# ============================================
+# EXERCISE 5: Mutations
+# ============================================
+
+def mutate_string(string: str, position: int, character: str) -> str:
+    """
+    Mutate a string
+    
+    :param string: String
+    :type string: str
+    :param position: Position of character to mutate
+    :type position: int
+    :param character: Character to use
+    :type character: str
+    :return: New string
+    :rtype: str
+    """
+    string_list = list(string)
+    string_list[position] = character
+    return ''.join(string_list)
 
 # ============================================
 # TESTS
@@ -95,7 +116,7 @@ if __name__ == "__main__":
 
     # Test Exercise 2
     print("\nExercise 2 - Print function:")
-    consecutive_numbers(5) #12345
+    consecutive_numbers(5) # 12345
 
     # Test Exercise 3
     print("\n\nExercise 3 - Find a string:")
@@ -103,6 +124,13 @@ if __name__ == "__main__":
     sub_string = "CDC".strip()
     
     count = count_substring(string, sub_string) 
-    print(count) #2
+    print(count) # 2
+
+    # Test Exercise 5
+    print("\n\nExercise 5 - Find a string:")
+    s = "abracadabra"
+    i, c = 5, "k"
+    s_new = mutate_string(s, int(i), c) 
+    print(s_new) # abrackdabra
 
     
