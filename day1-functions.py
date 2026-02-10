@@ -67,6 +67,20 @@ def count_substring(string: str, sub_string: str) -> int:
     return count
 
 # ============================================
+# EXERCISE 4: String validators
+# ============================================
+
+# Exercise + Test 
+if __name__ == '__main__':
+    s = 'qA2'
+    print("Exercise 4 - String validators:")
+    print(any(char.isalnum() for char in s)) #True
+    print(any(char.isalpha() for char in s)) #True
+    print(any(char.isdigit() for char in s)) #True
+    print(any(char.islower() for char in s)) #True
+    print(any(char.isupper() for char in s)) #True
+
+# ============================================
 # TESTS
 # ============================================
 
