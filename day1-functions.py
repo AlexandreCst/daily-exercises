@@ -38,12 +38,35 @@ def is_leap(year: int) -> bool:
 
 
 # ============================================
+# EXERCISE 2: Print Function
+# ============================================
+
+def consecutive_numbers(n: int):
+    """
+    Display n consecutive numbers in line
+    
+    :param n: number, int
+    """
+    for i in range(1, n+1):
+        print(i, end='')
+
+
+# ============================================
 # TESTS
 # ============================================
 
 if __name__ == "__main__":
     # Test Exercise 1
-    print("Exercise 1 - Leap Year:")
+    print("\nExercise 1 - Leap Year:")
     print(is_leap(2000))  # True
     print(is_leap(1900))  # False
     print(is_leap(2024))  # True
+
+    
+
+    # Test Exercise 2
+    print("\nExercise 2 - Print function:")
+    consecutive_numbers(5) #12345
+    print("\n")
+
+    
