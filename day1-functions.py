@@ -112,8 +112,6 @@ if __name__ == "__main__":
     print(is_leap(1900))  # False
     print(is_leap(2024))  # True
 
-    
-
     # Test Exercise 2
     print("\nExercise 2 - Print function:")
     consecutive_numbers(5) # 12345
