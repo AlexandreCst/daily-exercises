@@ -3,6 +3,7 @@
 import csv
 
 from pathlib import Path
+from datetime import datetime
 
 
 
@@ -76,11 +77,13 @@ def write_clean_csv(row_list: list[list]) -> list[dict]:
 
 
 # Exercise 1: Parse basic logs server
-path = Path("month-1-python-tools/exercises/weeks/server.log")
+path = Path("")
 
 with path.open(mode='r') as log_file:
     logs = log_file.readlines()
-    logs_split = [replace_char(log, ['"', '[', ']', '\n'], '').split(' ') for log in logs]
+    logs_split = [
+        replace_char(log, ['"', '[', ']', '\n'], '').split(' ') for log in logs
+        ]
 
     #logs_list = []
     result = parsing_log(logs_split)
@@ -95,8 +98,8 @@ for log in logs_infos:
 
 # Exercise 3: Handle a non formated csv to return a formated file
 
-path = Path("month-1-python-tools/exercises/weeks/unformated_csv.csv")
-new_path = Path("month-1-python-tools/exercises/weeks/formated_csv.csv")
+path = Path("")
+new_path = Path("")
 
 with path.open(mode='r') as csv_file:
     data = [line.replace(';', ',') for line in csv_file]
@@ -110,7 +113,51 @@ with path.open(mode='r') as csv_file:
         writer.writeheader()
         data_result = write_clean_csv(data_list)
         writer.writerows(data_result)
-        
+
+
+# Exercise 5: Handle different formated date
+
+def check_format(date: str):
+    """Check the date format"""
+    formats = [
+        "%d/%b/%Y:%H:%M:%S %z",
+        "%Y-%m-%d %H:%M:%S",
+        "%d/%m/%Y",
+        "%b %d, %Y",
+        "%Y%m%d",
+    ]
+    for format in formats:
+        try:
+            if datetime.strptime(date, format):
+                return datetime.strptime(date, format)
+        except ValueError:
+            continue
+    return None
+
+def normalized_date(date: datetime) -> str:
+    """Noramlisation of the date passed in argument"""
+    return date.strftime("%Y-%m-%d %H:%M:%S")
+
+
+dates = [
+    "15/Oct/2007:13:55:36 -0700",   # Apache format (ex: logs)
+    "2022-02-02 09:45:23",          # ISO 8601 format (standard)
+    "02/02/2022",                   # European format
+    "Feb 2, 2022",                  # English format
+    "20220202",                     # Compact format
+]
+
+formated_dates = []
+for element in dates:
+    date_format = check_format(element)
+    if date_format is None:
+        print("Sorry, this format is not supported.")
+    else:
+        formated_dates.append(normalized_date(date_format))
+
+for d in formated_dates:
+    print(d)
+    
         
 
 
