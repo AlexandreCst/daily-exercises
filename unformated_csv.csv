@@ -1,0 +1,11 @@
+name, age, city, salary
+Alice, 28, Paris, 45 000
+Bob;32;Lyon;52000
+Charlie, , Berlin, 38000
+Diana,  41,  Amsterdam,  61 000
+Eve, 29, Madrid, 47000
+Frank;35;Rome;55000
+Grace, 27, ,
+Heidi, 30, Vienna, 48000
+ , 33, Prague, 
+Ivan, 31, Lisbon, 53000
