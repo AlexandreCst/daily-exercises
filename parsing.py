@@ -48,5 +48,11 @@ with path.open(mode='r') as log_file:
                 }
             logs_list.append(item)
 
+# Exercise 2 : Extract IPs, dates and status codes
 
+ips_dates_codes = [
+    (log.get("IP"), log.get("date"), log.get("status")) for log in logs_list
+    ]
     
+for data in ips_dates_codes:
+    print(data)
