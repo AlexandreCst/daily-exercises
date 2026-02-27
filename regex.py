@@ -65,4 +65,25 @@ for date in dates:
         if result:
             print("Check formated date:", result.group())
             break
+
+
+# Exercise 4: Clean data with re.sub
+phones = [
+    "+33 (0)6.12.34.56.75",
+    "06-12-34-56-76",
+    "06 12 34 56 77",
+    "0612345678",
+    "+33612345679",
+]
+
+phones_list = [re.sub(r'(\+33\s*\(0\)|\+33)',  '0', phone) for phone in phones]
+raw_phones = [(''.join(re.findall(r'\d+', phone))) for phone in phones_list]
+
+clean_phones = [
+    re.sub(r'([0][6-7])(\d{2})(\d{2})(\d{2})(\d{2})', r'\1 \2 \3 \4 \5', phone) for phone in raw_phones
+    ]
+
+for phone in clean_phones:
+    print("Phone number formatted:", phone)
+
         
