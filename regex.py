@@ -43,3 +43,26 @@ with path.open(mode='r') as log_file:
 
 
 # Exercise 3: Date format validation
+dates = [
+    "15/Oct/2007:13:55:36 -0700",   # Apache format (ex: logs)
+    "2022-02-02 09:45:23",          # ISO 8601 format (standard)
+    "02/02/2022",                   # European format
+    "Feb 2, 2022",                  # English format
+    "20220202",                     # Compact format
+]
+
+regex = [
+    r'^(?P<date>\d{2}/\w{3}/\d{4}:\d{2}:\d{2}:\d{2}\s[+-]\d{4})$',
+    r'^(?P<iso>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})$',
+    r'^(?P<euro>\d{2}/\d{2}/\d{4})$',
+    r'^(?P<english>\w{3}\s\d{0,2},\s\d{4})$',
+    r'^(?P<compact>\w{8})$'
+]
+
+for date in dates:
+    for r in regex:
+        result = re.search(r, date)
+        if result:
+            print("Check formated date:", result.group())
+            break
+        
