@@ -1,5 +1,7 @@
 """Exercises to learn decorators"""
 
+import logging
+
 from time import perf_counter, sleep
 
 # ===================================
@@ -50,6 +52,41 @@ def retry_test():
         raise ValueError
     return f"Success! Count = {count}"
 
+
+# ======================================
+# Exercise 3: make @log_call decorator
+# ======================================
+
+logger = logging.getLogger(__name__)
+logger.setLevel("DEBUG")
+
+console_handler = logging.StreamHandler()
+console_handler.setLevel("DEBUG")
+logger.addHandler(console_handler)
+
+formatter = logging.Formatter(
+    "{asctime} - {levelname} - {message}",
+    style="{",
+    datefmt="%Y-%m-%d %H:%M:%S"
+)
+
+console_handler.setFormatter(formatter)
+
+def log_call(func):
+    def wrapper_log_call(*args, **kwargs):
+        value = func(*args, **kwargs)
+        logger.debug(
+            f"Positional argument(s): {args}, Keyword argument(s): {kwargs}, Return value: {value}"
+            )
+        return value
+    return wrapper_log_call
+
+
+@log_call
+def test_my_call(*args, **kwargs):
+    return args, kwargs
+
+
 # ===================================
 # TESTS
 # ===================================
@@ -65,3 +102,8 @@ if __name__ == "__main__":
     print("\nExercise 2:")
     retry_test()
     print(retry_test())
+
+    # Exercise 3:
+    print("\nExercise 3:")
+    test_my_call()
+    test_my_call("Hello World!", "Decorator learning", formation="Python", semaine=4)
