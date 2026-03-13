@@ -1,6 +1,7 @@
 """Exercises to learn decorators"""
 
 import logging
+import functools
 
 from time import perf_counter, sleep
 
@@ -9,6 +10,7 @@ from time import perf_counter, sleep
 # ===================================
 
 def timer(func): # Timer decorator
+    @functools.wraps(func)
     def wrapper_timer(*args, **kwargs): # Wrapper of timer decorator
         start = perf_counter()
         value = func(*args, **kwargs)
@@ -28,6 +30,7 @@ def timer_test(n_iter):
 
 def retry(n):
     def decorator_retry(func):
+        @functools.wraps(func)
         def wrapper_retry(*args, **kwargs):
             error = Exception()
             for _ in range(n):
@@ -73,6 +76,7 @@ formatter = logging.Formatter(
 console_handler.setFormatter(formatter)
 
 def log_call(func):
+    @functools.wraps(func)
     def wrapper_log_call(*args, **kwargs):
         value = func(*args, **kwargs)
         logger.debug(
@@ -97,13 +101,18 @@ if __name__ == "__main__":
     print("Exercise 1:")
     timer_test(4)
     timer_test(400000)
+    print(timer_test.__name__)
+    print(timer_test.__doc__)
 
     # Exercise 2:
     print("\nExercise 2:")
-    retry_test()
     print(retry_test())
+    print(retry_test.__name__)
+    print(retry_test.__doc__)
 
     # Exercise 3:
     print("\nExercise 3:")
     test_my_call()
     test_my_call("Hello World!", "Decorator learning", formation="Python", semaine=4)
+    print(test_my_call.__name__)
+    print(test_my_call.__doc__)
