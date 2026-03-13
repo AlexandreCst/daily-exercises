@@ -1,6 +1,6 @@
 """Exercises to learn decorators"""
 
-from time import perf_counter
+from time import perf_counter, sleep
 
 # ===================================
 # Exercise 1: make @timer decorator
@@ -27,15 +27,28 @@ def timer_test(n_iter):
 def retry(n):
     def decorator_retry(func):
         def wrapper_retry(*args, **kwargs):
+            error = Exception()
             for _ in range(n):
-                value = func(*args, **kwargs)
-            return value
+                try:
+                    value = func(*args, **kwargs)
+                    return  value
+                except Exception as e:
+                    print("Error, retry...")
+                    error = e
+                    sleep(1)
+            raise error
         return wrapper_retry
     return decorator_retry
 
-@retry(3)
+count = 0
+
+@retry(5)
 def retry_test():
-    print("Retry test")
+    global count
+    while count < 2:
+        count += 1
+        raise ValueError
+    return f"Success! Count = {count}"
 
 # ===================================
 # TESTS
@@ -51,3 +64,4 @@ if __name__ == "__main__":
     # Exercise 2:
     print("\nExercise 2:")
     retry_test()
+    print(retry_test())
