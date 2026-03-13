@@ -3,7 +3,10 @@
 import re
 from pathlib import Path
 
+
+# =================================
 # Exercise 1: Validate IP address
+# =================================
 
 ips = ["123.456.789.032", "0.0.0.0", "1.900..35", "hello", "95.123.21.687", "hello 95.123.21.687 world"]
 
@@ -14,7 +17,10 @@ for ip in ips:
         print("This is a valid IP:", ip)
 
 
+# ===================================================================================
 # Exercise 2: parse IP, date, timezone, request, status code and size in server.log
+# ===================================================================================
+
 regex = r'''^                                                              # Start of string
             (?P<ip>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\s                   # IP adress
             (?P<id>\S+)\s                                                  # id
@@ -42,7 +48,10 @@ with path.open(mode='r') as log_file:
             print("\n")
 
 
+# ====================================
 # Exercise 3: Date format validation
+# ====================================
+
 dates = [
     "15/Oct/2007:13:55:36 -0700",   # Apache format (ex: logs)
     "2022-02-02 09:45:23",          # ISO 8601 format (standard)
@@ -67,7 +76,10 @@ for date in dates:
             break
 
 
+# ====================================
 # Exercise 4: Clean data with re.sub
+# ====================================
+
 phones = [
     "+33 (0)6.12.34.56.75",
     "06-12-34-56-76",

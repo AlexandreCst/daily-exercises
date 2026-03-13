@@ -14,7 +14,10 @@ def replace_char(text: str, char: list[str], new_char: str) -> str:
     return text
 
 
+# ============================================================================
 # Exercise 4: Parsing functions (encapsulate ex 1, 2 and 3 inside functions)
+# ============================================================================
+
 def log_dict(log_list: list[str]) -> dict[str, str]:
     """Build a dictionary with a list"""
     
@@ -76,7 +79,10 @@ def write_clean_csv(row_list: list[list]) -> list[dict]:
     return data_result
 
 
+# =====================================
 # Exercise 1: Parse basic logs server
+# =====================================
+
 path = Path("")
 
 with path.open(mode='r') as log_file:
@@ -89,14 +95,18 @@ with path.open(mode='r') as log_file:
     result = parsing_log(logs_split)
 
 
+# =================================================
 # Exercise 2: Extract IPs, dates and status codes
+# =================================================
 
 logs_infos = log_infos(result)
 for log in logs_infos:
     print(log)
 
 
+# =================================================================
 # Exercise 3: Handle a non formated csv to return a formated file
+# =================================================================
 
 path = Path("")
 new_path = Path("")
@@ -115,7 +125,9 @@ with path.open(mode='r') as csv_file:
         writer.writerows(data_result)
 
 
+# ============================================
 # Exercise 5: Handle different formated date
+# ============================================
 
 def check_format(date: str):
     """Check the date format"""
