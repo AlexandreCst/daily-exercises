@@ -1,5 +1,7 @@
 """Exercises to learn decorators"""
 
+import tracemalloc
+
 from pathlib import Path
 
 # =================================
@@ -32,8 +34,8 @@ def file_readlines(path="docs/pipeline.log"): # Load the data directly in Memory
     path = Path(path) # Define path
     with path.open(mode="r") as file:
         lines = file.readlines() # Get all line in the file
-        for line in lines:
-            print(line)
+        return lines
+
 
 # ===================================
 # TESTS
@@ -46,3 +48,23 @@ if __name__ == "__main__":
 
     for i in range(10): # Print the first number of the Fibonacci sequence
         print(next(gen))
+
+    # Exercise 2
+    tracemalloc.start() # Start tracing memory allocation
+    file = file_readlines() # Run classic function
+    func_snapshot = tracemalloc.take_snapshot()
+    fun_size = tracemalloc.get_traced_memory()
+    tracemalloc.stop() # Stop memory tracing
+
+
+    tracemalloc.start() # Start tracing memory
+    for line in file_by_line(): # Run generator
+        print(line)
+    gen_snapshot = tracemalloc.take_snapshot()
+    gen_size = tracemalloc.get_traced_memory()
+    tracemalloc.stop() # Stop memory tracing
+
+    print(f"Function memory allocation: {fun_size}")
+    print(f"Generator memory allocation: {gen_size}")
+
+    
