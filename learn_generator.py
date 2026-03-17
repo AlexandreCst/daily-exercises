@@ -5,13 +5,22 @@
 # =================================
 
 def fibonacci():
-    """Fibonacci with infinite generator"""
+    """Fibonacci infinite generator"""
     n, m = 0, 1 # Initialization
     while True: # Create infinite loop
-        yield n 
-        n, m = m, n + m 
+        yield n # Lazy evaluation
+        n, m = m, n + m
+        print(n, m)
 
-gen = fibonacci()
 
-for i in range(2, 10):
-    print(next(gen))
+# ===================================
+# TESTS
+# ===================================
+
+if __name__ == "__main__":
+
+    # Exercise 1
+    gen = fibonacci() # Generator declaration
+
+    for i in range(10): # Print the first number of the Fibonacci sequence
+        print(next(gen))
