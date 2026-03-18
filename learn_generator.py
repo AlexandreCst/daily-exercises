@@ -67,6 +67,15 @@ world_city = [
     ]
  
 
+# ===================================================================================
+# Exercise 4: Memory allocation comparison between list comprehension and generator
+# ===================================================================================
+
+def my_generator(): # 1M element generator
+    for g in range(1_000_000):
+        yield g**4
+
+
 # ===================================
 # TESTS
 # ===================================
@@ -111,4 +120,20 @@ if __name__ == "__main__":
     for code, city in groupby(world_city, key=lambda x: x[1]):
         for c, _ in city:
             print(code, c)
-        
+
+    # Exercise 4
+    tracemalloc.start()
+    my_list = [i**4 for i in range(1_000_000)] # List with 1M elements
+    list_snapshot = tracemalloc.take_snapshot()
+    list_size = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
+
+    tracemalloc.start()
+    for element in my_generator(): # Execute the 1M elements generator
+        pass
+    my_gen_snapshot = tracemalloc.take_snapshot()
+    my_gen_size = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
+    
+    print(f"Memory allocation list comprehension: {list_size}")
+    print(f"Memory allocation generator: {my_gen_size}")
