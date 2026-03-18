@@ -3,6 +3,8 @@
 import tracemalloc
 
 from pathlib import Path
+from itertools import islice, chain, groupby
+
 
 # =================================
 # Exercise 1: Fibonacci generator
@@ -35,7 +37,35 @@ def file_readlines(path="docs/pipeline.log"): # Load the data directly in Memory
     with path.open(mode="r") as file:
         lines = file.readlines() # Get all line in the file
         return lines
+    
 
+# ==================================================================
+# Exercise 3: Focus on itertools.islice(), .chain() and .groupby()
+# ==================================================================
+
+# Example with .islice()
+first_fib = islice(fibonacci(), 5)
+
+# Example with .chain()
+city = ['Saint-Etienne', 'Lyon', 'Lille', 'Marseille', 'Toulouse']
+postcode = ['42', '69', '59', '13', '31']
+
+city_postcode = chain(city, postcode)
+
+# Example with .groupby()
+world_city = [
+    ('Shanghai', 'CN'),
+    ('Beijing', 'CN'),
+    ('Delhi', 'IN'),
+    ('Canton', 'CN'),
+    ('Istanbul','TR'),
+    ('Chengdu', 'CN'),
+    ('Mumbai', 'IN'),
+    ('Kinshasa', 'CD'),
+    ('Karachi', 'PK'),
+    ('Lagos', 'NG')
+    ]
+ 
 
 # ===================================
 # TESTS
@@ -67,4 +97,18 @@ if __name__ == "__main__":
     print(f"Function memory allocation: {fun_size}")
     print(f"Generator memory allocation: {gen_size}")
 
+    # Exercise 3
+    print(list(first_fib)) # Display a list of 5 first numbers of Fibonacci sequence
+    print(list(city_postcode)) # Display a list of city and postcode chained
     
+    # Group by with sorted list
+    city_sorted = sorted(world_city, key=lambda x: x[1])
+    for code, city in groupby(city_sorted, key=lambda x:x[1]):
+        for c, _ in city:
+            print(code, c)
+
+    # Group by comparison without sorted list
+    for code, city in groupby(world_city, key=lambda x: x[1]):
+        for c, _ in city:
+            print(code, c)
+        
