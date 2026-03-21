@@ -1,0 +1,2 @@
+"""Exercises to learn requests"""
+

@@ -1,4 +1,4 @@
-"""Exercises to learn decorators"""
+"""Exercises to learn generators"""
 
 import tracemalloc
 
