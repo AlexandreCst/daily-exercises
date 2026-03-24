@@ -80,4 +80,31 @@ else:
     print(f"Request success: {status_response.status_code}")
 
 
+# =================================================
+# Exercise 4: Automatic pagination with generator
+# =================================================
+
+def pagination():
+    """Function to work through the pages of posts."""
+    page = 1
+    while True:
+        response = requests.get(
+            f'https://jsonplaceholder.typicode.com/posts/',
+            params={"_page": page, "_per_page": 10}
+            )
+        if not response.json():
+            break
+        else:
+            yield response.text
+            page += 1
+
+for index, p in enumerate(pagination()):
+    print("{:=^200}".format(""))
+    print("{: ^200}".format(f"Page {index+1}"))
+    print("{:=^200}".format(""))
+
+    print(f"\n{p}\n")
+
+
+
 
