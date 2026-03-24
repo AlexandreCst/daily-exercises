@@ -84,20 +84,23 @@ else:
 # Exercise 4: Automatic pagination with generator
 # =================================================
 
+# Generator pagination
 def pagination():
     """Function to work through the pages of posts."""
-    page = 1
+    page = 1 # Initialize pagination
     while True:
+        # Make request untill the end of the posts
         response = requests.get(
             f'https://jsonplaceholder.typicode.com/posts/',
             params={"_page": page, "_per_page": 10}
             )
-        if not response.json():
+        if not response.json(): # Check if there are no results
             break
         else:
             yield response.text
             page += 1
 
+# Display post
 for index, p in enumerate(pagination()):
     print("{:=^200}".format(""))
     print("{: ^200}".format(f"Page {index+1}"))
