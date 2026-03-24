@@ -3,6 +3,7 @@
 import requests, json
 
 from requests.exceptions import Timeout, ConnectionError as RqConnectionError
+from requests.exceptions import HTTPError
 
 # ==================================================================
 # Exercise 1: Get requests on JSONPlaceholder posts, users & todos
@@ -41,13 +42,14 @@ post = {
 request_post = requests.post('https://jsonplaceholder.typicode.com/posts', json=post)
 
 print(f"\nPost request status: {request_post.status_code}") # Check the status code
-print(f"Response body:\n{json.dumps(request_post.json(), indent=4)}") # Display the response body
+print(f"Response body:\n{json.dumps(request_post.json(), indent=4)}\n") # Display the response body
 
 
 # =============================================================
 # Exercise 3: Handle timeout and error code status (4xx, 5xx)
 # =============================================================
 
+# Handle timeout
 try:
     # Simulate a timeout
     timeout_response = requests.get('https://jsonplaceholder.typicode.com/posts', timeout=0.01)
@@ -64,5 +66,18 @@ except ConnectionError as e: # Catching python connection error
 
 else: # Request status code if no timeout is catching 
     print(f"Request status: {timeout_response.status_code}")
+
+
+# Handle error code status (4xx, 5xx)
+try:
+    status_response = requests.get('https://jsonplaceholder.typicode.com/posts/999999') # This URL doesn't exist
+    status_response.raise_for_status() # Raise an error if the code is upper than 399
+
+except HTTPError as e:
+    print(f"Error: {e}") # Display the error
+
+else:
+    print(f"Request success: {status_response.status_code}")
+
 
 
