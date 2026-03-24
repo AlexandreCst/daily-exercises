@@ -2,6 +2,8 @@
 
 import requests, json
 
+from requests.exceptions import Timeout, ConnectionError as RqConnectionError
+
 # ==================================================================
 # Exercise 1: Get requests on JSONPlaceholder posts, users & todos
 # ==================================================================
@@ -40,3 +42,27 @@ request_post = requests.post('https://jsonplaceholder.typicode.com/posts', json=
 
 print(f"\nPost request status: {request_post.status_code}") # Check the status code
 print(f"Response body:\n{json.dumps(request_post.json(), indent=4)}") # Display the response body
+
+
+# =============================================================
+# Exercise 3: Handle timeout and error code status (4xx, 5xx)
+# =============================================================
+
+try:
+    # Simulate a timeout
+    timeout_response = requests.get('https://jsonplaceholder.typicode.com/posts', timeout=0.01)
+    #timeout_response = requests.get('https://httpbin.org/delay/5', timeout=1)
+
+except Timeout as e: # Catching the Timeout error
+    print(f"Error: {e}")
+
+except RqConnectionError as e: # Catching request connection error
+    print(f"Error request: {e}")
+
+except ConnectionError as e: # Catching python connection error
+    print(f"Error python: {e}")
+
+else: # Request status code if no timeout is catching 
+    print(f"Request status: {timeout_response.status_code}")
+
+
