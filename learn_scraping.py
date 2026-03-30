@@ -1,4 +1,4 @@
-"""Exercises to learn decorators"""
+"""Exercises to learn web scraping"""
 
 import requests
 from bs4 import BeautifulSoup
