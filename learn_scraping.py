@@ -13,9 +13,33 @@ print(f"Response status: {response.status_code}\n")
 html = response.text
 soup = BeautifulSoup(html, "html.parser")
 
-books = soup.find_all("li", class_=True)
-#for book in books:
- #   print(book.get_text())
+html_books = soup.find_all("a", title=True)
+books = []
+for book in html_books:
+    html_title = BeautifulSoup(str(book), 'html.parser')
+    title = html_title.a['title']
+    books.append(title)
 
-print(books)
-#print(soup.prettify())
+prices = []
+html_prices = soup.find_all("p", class_="price_color")
+for price in html_prices:
+    prices.append(price.get_text(strip=True).replace("Â", ""))
+
+
+availabilities = []
+html_availabilities = soup.find_all("p", class_="instock availability")
+for availability in html_availabilities:
+    availabilities.append(availability.get_text(strip=True))
+
+rates = []
+html_rates = soup.find_all("p", class_="star-rating")
+for rate in html_rates:
+    
+print(html_rates)
+
+
+
+# print(books)
+# print(prices)
+# print(availabilities)
+# print(soup.prettify())
