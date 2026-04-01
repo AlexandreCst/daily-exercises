@@ -1,7 +1,8 @@
 """Exercises to learn web scraping"""
 
-import requests
+import requests, csv
 from bs4 import BeautifulSoup
+from pathlib import Path
 
 # ==================================================================
 # Exercise 1 & 2: Scrape first page of http://books.toscrape.com/
@@ -27,3 +28,23 @@ for book in books:
     resume.append((book_title, book_price, book_availability, book_rating))
     
 print(resume)
+
+
+# ==================================================================
+# Exercise 3 : Save the result in CSV file
+# ==================================================================
+
+path = Path("docs/scraping.csv")
+
+with path.open(mode="w", newline="") as csv_file:
+    fieldnames = ["title", "price", "availability", "rating"]
+    writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+
+    writer.writeheader()
+    for title, price, availability, rating in resume:
+        writer.writerow({
+            "title": title,
+            "price": price,
+            "availability": availability,
+            "rating": rating
+            })
