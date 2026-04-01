@@ -34,6 +34,13 @@ for availability in html_availabilities:
 rates = []
 html_rates = soup.find_all("p", class_="star-rating")
 for rate in html_rates:
+    html_rate = BeautifulSoup(str(rate), "html.parser")
+    rates.append(html_rate.p["class"][1])
+
+
+resume = zip(books, prices, availabilities, rates)
+for r in resume:
+    print(r)
     
 print(html_rates)
 
