@@ -4,49 +4,26 @@ import requests
 from bs4 import BeautifulSoup
 
 # ==================================================================
-# Exercise 1: Scrape first page of http://books.toscrape.com/
+# Exercise 1 & 2: Scrape first page of http://books.toscrape.com/
 # and display title, price, availability and rate for each book 
 # ==================================================================
 
-response = requests.get("http://books.toscrape.com/")
-print(f"Response status: {response.status_code}\n")
-html = response.text
-soup = BeautifulSoup(html, "html.parser")
-
-html_books = soup.find_all("a", title=True)
-books = []
-for book in html_books:
-    html_title = BeautifulSoup(str(book), 'html.parser')
-    title = html_title.a['title']
-    books.append(title)
-
-prices = []
-html_prices = soup.find_all("p", class_="price_color")
-for price in html_prices:
-    prices.append(price.get_text(strip=True).replace("Â", ""))
+response = requests.get("http://books.toscrape.com/") # Get data of the website
+response.encoding = "utf-8" # Define the data response encoding
+print(f"Response status: {response.status_code}\n") # Check the request status
 
 
-availabilities = []
-html_availabilities = soup.find_all("p", class_="instock availability")
-for availability in html_availabilities:
-    availabilities.append(availability.get_text(strip=True))
+html = response.text # Get the data of the request in string
+soup = BeautifulSoup(html, "html.parser") # Parse the response string
 
-rates = []
-html_rates = soup.find_all("p", class_="star-rating")
-for rate in html_rates:
-    html_rate = BeautifulSoup(str(rate), "html.parser")
-    rates.append(html_rate.p["class"][1])
+books = soup.find_all("article", class_="product_pod") # Search all books on page 1
+resume = [] # Get the title, price, availability and rating of each book
+for book in books:
+    book_title = book.find("a", title=True)["title"]
+    book_price = book.find("p", class_="price_color").get_text(strip=True)
+    book_availability = book.find("p", class_="instock availability").get_text(strip=True)
+    book_rating = book.find("p", class_="star-rating")["class"][1]
 
-
-resume = zip(books, prices, availabilities, rates)
-for r in resume:
-    print(r)
+    resume.append((book_title, book_price, book_availability, book_rating))
     
-print(html_rates)
-
-
-
-# print(books)
-# print(prices)
-# print(availabilities)
-# print(soup.prettify())
+print(resume)
